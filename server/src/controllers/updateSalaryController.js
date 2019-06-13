@@ -1,7 +1,7 @@
 const Cooperator = require('../models/Cooperator')
 
 module.exports = {
-  async store(req, res){
+  async update(req, res){
     const post = await Cooperator.findById(req.params.id)
     
     post.salary += parseInt(req.params.salary)
