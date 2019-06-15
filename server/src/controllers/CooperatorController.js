@@ -21,7 +21,7 @@ module.exports = {
       )
 
         fs.unlinkSync(req.file.path)
-
+        
     const post = await Cooperator.create({
       name,
       description,
