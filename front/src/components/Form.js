@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, FormGroup, Label, Input, Row } from 'reactstrap'
+import { Button, Label, Input} from 'reactstrap'
 import server from '../services/server'
 
 import './form.css'
@@ -22,9 +22,6 @@ export default class AddCooperator extends React.Component {
     };
     this.checkFormField = this.checkFormField.bind(this)
     this.SubmitcooperatorForm = this.SubmitcooperatorForm.bind(this)
-    const size = {
-      width : '50px'
-    }
 
 }
 

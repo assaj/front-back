@@ -11,8 +11,11 @@ export default class Cards extends React.Component {
         name: '',
         description: '',
         file: '',
+        newSalaryError: '',
+        newSalary: 0,
         cooperators: []
     };
+    this.checkNewSalary = this.checkNewSalary.bind(this)
   }
 
 
@@ -29,10 +32,32 @@ export default class Cards extends React.Component {
       
     
   }
+
   async removeCooperator(id){
     await server.delete(`/posts/${id}`)
     this.loadCooperators()
   }
+
+  async updateCooperator(id){
+    if(this.state.newSalaryError === ''){
+      await server.post(`/update/${id}/${this.state.newSalary}`)
+      this.loadCooperators()
+    }
+  }
+
+  checkNewSalary(event){
+      let value = parseInt(event.target.value)
+      if(isNaN(value)){
+        this.setState({ newSalaryError: 'Needs to have a number' })
+      }else if(value < 0){
+        this.setState({ newSalaryError: "It's can't be negative"  })
+      }else {
+        this.setState({ newSalaryError: '' })
+      }
+      this.setState({ newSalary: value })
+  }
+  
+
   render() {
     let { cooperators } = this.state;
     
@@ -46,7 +71,10 @@ export default class Cards extends React.Component {
                 <CardTitle>{cooperator.name}</CardTitle>
                 <CardSubtitle>salary: {cooperator.salary}</CardSubtitle>
                 <CardText>Description: {cooperator.description}</CardText>
-                <Button onClick={() => this.removeCooperator(cooperator._id)}>Excluir</Button>
+                <Button id='button' onClick={() => this.removeCooperator(cooperator._id)}>Remove</Button>
+                <Button id='button' onClick={() => this.updateCooperator(cooperator._id)}>Update salary</Button>
+                <input id='button' placeholder="New salary" onChange={this.checkNewSalary}></input>
+                <p className="text-danger d-inline" name="descriptionError" > {this.state.newSalaryError}</p>
               </CardBody> 
             </Card>
           </article>
